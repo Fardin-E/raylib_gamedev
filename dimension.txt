@@ -1,0 +1,4 @@
+Width = 144
+Height = 192
+
+pixel calculations = GCD(image dimension) / 2
