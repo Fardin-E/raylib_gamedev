@@ -22,15 +22,15 @@ static void GameStartup() {
 	textures[1] = LoadTextureFromImage(tile_img);
 	UnloadImage(tile_img);
 
-	/*for (int i = 0; i < WORLD_WIDTH; i++) {
+	for (int i = 0; i < WORLD_WIDTH; i++) {
 		for (int j = 0; j < WORLD_HEIGHT; j++) {
 			world[i][j] = sTile(i, j);
 		}
-	}*/
+	}
 
 	// x, y position of the player
-	player.x = PLAYER_TILE_WIDTH; 
-	player.y = PLAYER_TILE_HEIGHT;
+	player.x = TILE_WIDTH; 
+	player.y = TILE_HEIGHT;
 
 }
 
@@ -40,8 +40,6 @@ static void GameUpdate() {
 }
 
 static void GameRender() {
-	DrawWarrior(player.x, player.y, 0, 0);
-
 	sTile tile;
 	int texture_index_x = 0;
 	int texture_index_y = 0;
@@ -50,9 +48,12 @@ static void GameRender() {
 		for (int j = 0; j < WORLD_HEIGHT; j++) {
 			tile = world[i][j];
 
-			
+			DrawTile(tile.x * 100, tile.y * 100, texture_index_x, texture_index_y, 1);
 		}
 	}
+
+	DrawTile(player.x, player.y, 0, 0, 0);
+
 }
 
 static void GameShutdown() {

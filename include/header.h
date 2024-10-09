@@ -9,8 +9,8 @@
 // Declare the textures array
 extern Texture2D textures[MAX_TEXTURES];
 
-constexpr float PLAYER_TILE_WIDTH = 192;
-constexpr float PLAYER_TILE_HEIGHT = 192;
+constexpr float TILE_WIDTH = 192;
+constexpr float TILE_HEIGHT = 192;
 
 struct sTile {
     float x;
@@ -23,4 +23,4 @@ struct sTile {
 };
 
 // Declare the DrawWarrior function
-void DrawWarrior(float pos_x, float pos_y, float texture_index_x, float texture_index_y);
+void DrawTile(float pos_x, float pos_y, float texture_index_x, float texture_index_y, int texture);
