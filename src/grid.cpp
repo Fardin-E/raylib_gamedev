@@ -11,38 +11,32 @@ void Grid::update() {
 	if (IsKeyPressed(KEY_D)) newPos.x++;
 
 	if (newPos.x >= 0 && newPos.x < gridWidth &&
-		newPos.y >= 0 && newPos.y < gridHeight) {
+		newPos.y >= 0 && newPos.y < gridHeight && !getCell(newPos.x, newPos.y)) {
 		playerPos = newPos;
 	}
 }
 
-void Grid::draw() {
+void Grid::drawGame() {
 	ClearBackground(RAYWHITE);
 
 	// Draw grid
 	for (int y = 0; y < gridHeight; y++) {
 		for (int x = 0; x < gridWidth; x++) {
-			// Calculate screen position
 			Rectangle cellRect = {
 				static_cast<float>(x * CELL_SIZE),
 				static_cast<float>(y * CELL_SIZE),
 				static_cast<float>(CELL_SIZE),
-				static_cast<float>(CELL_SIZE),
+				static_cast<float>(CELL_SIZE)
 			};
-			
-			// Draw cell border
+
+			// Access grid using y * width + x
+			if (grid[y * gridWidth + x]) {
+				DrawRectangleRec(cellRect, DARKGRAY);  // Wall
+			}
+
 			DrawRectangleLinesEx(cellRect, 1, LIGHTGRAY);
 		}
 	}
-
-	// Draw player
-	Rectangle playerRect = {
-		playerPos.x * CELL_SIZE,
-		playerPos.y * CELL_SIZE,
-		CELL_SIZE,
-		CELL_SIZE,
-	};
-	DrawRectangleRec(playerRect, BLUE);
 
 	// Draw grid coordinates (optional, helpful for debugging)
 	for (int y = 0; y < gridHeight; y++) {
@@ -52,6 +46,35 @@ void Grid::draw() {
 				y * CELL_SIZE + 5,
 				10,
 				GRAY);
+		}
+	}
+}
+
+void Grid::drawPlayer() {
+
+	// Draw player
+	Rectangle playerRect = {
+		playerPos.x * CELL_SIZE,
+		playerPos.y * CELL_SIZE,
+		CELL_SIZE,
+		CELL_SIZE,
+	};
+	DrawRectangleRec(playerRect, BLUE);
+}
+
+bool Grid::getCell(int x, int y) const {
+	return grid[y * gridWidth + x];
+}
+
+void Grid::setCell(int x, int y, bool value) {
+	grid[y * gridWidth + x] = value;
+}
+
+void Grid::generateRandomWalls(int seed, float wallChance) {
+	srand(seed);
+	for (int y = 0; y < gridHeight; y++) {
+		for (int x = 0; x < gridWidth; x++) {
+			grid[y * gridWidth + x] = (rand() % 100) < (wallChance * 100);
 		}
 	}
 }

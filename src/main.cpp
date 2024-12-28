@@ -1,10 +1,12 @@
 ﻿#include "grid.h"
+#include <random>
 
 int main() {
 	const float screenWidth = 1200;
 	const float screenHeight = 800;
-	const int gridWidth = screenWidth / 50;
-	const int gridHeight = screenHeight / 50;
+	const int gridWidth = screenWidth / 25;
+	const int gridHeight = screenHeight / 25;
+
 
 	int zoomMode = 0;
 
@@ -49,7 +51,9 @@ int main() {
 
 		// camera.target = static_cast<Vector2> (game.playerPos.x + 20, game.playerPos.y + 20);
 		
-		game.draw();
+		game.drawGame();
+		game.drawPlayer();
+		game.generateRandomWalls(32, 0.3f);
 
 		EndMode2D();
 
